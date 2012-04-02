@@ -17,7 +17,7 @@
 // ------------------------------------------------------------------------
 
 /**
- * Tester 
+ * Fuel Tester object
  *
  * @package		FUEL CMS
  * @subpackage	Libraries
@@ -51,6 +51,15 @@ class Fuel_tester extends Fuel_advanced_module {
 		$this->initialize($params);
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Runs the tests and returns an array of result information that can be passed to a view file for display
+	 *
+	 * @access	public
+	 * @param	array	The tests to run
+	 * @return	array
+	 */
 	function run($tests)
 	{
 		$tmpl = ($this->is_cli()) ? $this->load_view('_admin/report_template_cli', array(), TRUE) : $this->load_view('_admin/report_template', array(), TRUE);
@@ -124,6 +133,17 @@ class Fuel_tester extends Fuel_advanced_module {
 		return $results;
 	}
 	
+	// --------------------------------------------------------------------
+
+	/**
+	 * Returns an array of test(s) across one or more modules
+	 *
+	 * @access	public
+	 * @param	string	The module to retrieve the tests from (optional)
+	 * @param	string	The folder name within the module. The default is 'tests 
+	 * @param	boolean	If TRUE, will just return just the paths to the tests
+	 * @return	array
+	 */
 	function get_tests($module = NULL, $folders = array(), $just_tests = FALSE)
 	{
 		if (!empty($module))
@@ -181,7 +201,17 @@ class Fuel_tester extends Fuel_advanced_module {
 	{
 		return Tester_base::is_cli();
 	}
-	
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Returns an array of test(s) across one or more modules
+	 *
+	 * @access	protected
+	 * @param	string	The module to retrieve the tests from (optional)
+	 * @param	string	The folder name within the module. The default is 'tests 
+	 * @return	array
+	 */
 	protected function _get_tests($module = NULL, $folders = array())
 	{
 		// convert folders to an array if just a string

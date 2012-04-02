@@ -59,7 +59,7 @@ abstract class Tester_base
 	// --------------------------------------------------------------------
 
 	/**
-	 * Returns where condition based on the users logged in state
+	 * Runs a test passing the value and the expected results. The name parameter will help identify it in the results page.
 	 *
 	 * @access	public
 	 * @param	mixed
@@ -99,7 +99,7 @@ abstract class Tester_base
 	// --------------------------------------------------------------------
 
 	/**
-	 *  Placeholder to be overwritten by child classes for test setup (like database table etc)
+	 *  Placeholder to be overwritten by child classes for test setup (like database table creation etc).
 	 *
 	 * @access	public
 	 * @return	void
@@ -112,7 +112,7 @@ abstract class Tester_base
 	// --------------------------------------------------------------------
 
 	/**
-	 *  Is called at the end of the test and will remove any test database that has been created
+	 * Is called at the end of the test and will remove any test database that has been created.
 	 *
 	 * @access	public
 	 * @return	void
@@ -160,7 +160,7 @@ abstract class Tester_base
 	 * @param	string
 	 * @return	mixed
 	 */
-	protected function config_item($key)
+	public function config_item($key)
 	{
 		$tester_config = $this->CI->config->item('tester');
 		return $tester_config[$key];
@@ -175,7 +175,7 @@ abstract class Tester_base
 	 * @param	string
 	 * @return	void
 	 */
-	protected function db_connect($dsn = '')
+	public function db_connect($dsn = '')
 	{
 		// check config if $dsn is empty
 		if (empty($dsn))
@@ -189,12 +189,13 @@ abstract class Tester_base
 	// --------------------------------------------------------------------
 
 	/**
-	 *  Checks to see if the database exists or not
+	 *  Checks to see if the database specified in the tester configuration exists or not
 	 *
 	 * @access	public
+	 * @param	string
 	 * @return	void
 	 */
-	protected function db_exists($test)
+	public function db_exists()
 	{
 		//$this->dbutil->database_exists(); // may be replaced with this later
 
@@ -206,13 +207,13 @@ abstract class Tester_base
 	// --------------------------------------------------------------------
 
 	/**
-	 *  Creates the database.
+	 *  Creates the database based on the tester configuration values.
 	 *
 	 * @access	public
 	 * @param	boolean
 	 * @return	void
 	 */
-	protected function create_db()
+	public function create_db()
 	{
 		$this->db_connect();
 		
@@ -237,7 +238,7 @@ abstract class Tester_base
 	 * @param	boolean
 	 * @return	void
 	 */
-	protected function remove_db()
+	public function remove_db()
 	{
 		$this->db_connect();
 		
@@ -254,14 +255,14 @@ abstract class Tester_base
 	// --------------------------------------------------------------------
 
 	/**
-	 *  Loads the sql from a file in the {module}/test/sql folder
+	 *  Loads the sql from a file in the {module}/test/sql folder. You can enter <dfn>NULL</dfn> or an empty string <dfn>''</dfn> if you are loading an SQL file from your application directory.
 	 *
 	 * @access	public
 	 * @param	string
 	 * @param	string
 	 * @return	void
 	 */
-	protected function load_sql($file = NULL, $module = 'tester')
+	public function load_sql($file = NULL, $module = 'tester')
 	{
 		if (!$this->_is_db_created) $this->create_db();
 		if (empty($module) OR $module == 'app')
@@ -306,7 +307,7 @@ abstract class Tester_base
 	 * @param	array
 	 * @return	string
 	 */
-	protected function load_page($page, $post = array())
+	public function load_page($page, $post = array())
 	{
 		if (!is_array($post))
 		{
@@ -347,7 +348,7 @@ abstract class Tester_base
 	// --------------------------------------------------------------------
 
 	/**
-	 *  Convenience method to test if something exists on a page
+	 *  Convenience method to test if something exists on a page. The first parameter is a string to match. The second parameter says whether to use jquery syntax to match a specific DOM node (TRUE), or to use regular expression (FALSE).
 	 *
 	 * @access	public
 	 * @param	string
@@ -370,7 +371,7 @@ abstract class Tester_base
 	// --------------------------------------------------------------------
 
 	/**
-	 *  Class desctruct magic method which will run teardown
+	 *  Magic method which will run the teardown method
 	 *
 	 * @access	public
 	 * @return	void
