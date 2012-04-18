@@ -28,12 +28,12 @@
 
 abstract class Tester_base 
 {
-	protected $CI;
-	protected $fuel = NULL;
+	protected $CI = NULL; // a reference to the CodeIgntier super object
+	protected $fuel = NULL; // a reference to the FUEL object
 	
-	protected $loaded_page;
+	protected $loaded_page = NULL; // determines if a pges is loaded
 	
-	private $_is_db_created;
+	private $_is_db_created = NULL;
 	
 	// --------------------------------------------------------------------
 

@@ -5,9 +5,9 @@
 
 	<div class="clear"></div>
 	
-	<div style="text-align: center; margin: 0 0 30px 280px;" class="buttonbar">
+	<div style="text-align: center; margin: 0 0 30px 328px;" class="buttonbar">
 		<ul>
-			<li class="end"><a href="#" class="ico ico_tools_tester" id="run_tests"><?=lang('btn_run_tests')?></a></li>
+			<li class="unattached"><a href="#" class="ico ico_tools_tester" id="run_tests"><?=lang('btn_run_tests')?></a></li>
 		</ul>
 	</div>
 
