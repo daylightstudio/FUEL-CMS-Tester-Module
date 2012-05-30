@@ -4,7 +4,19 @@
 <h2>Overview</h2>
 <p>The Tester module allows you to easily create tests and run them in the FUEL admin. 
 To create a test, add a <dfn>test</dfn> folder within your applications folder. Tester will read that folder to create it's list of tests you are able to run.
-It will even scan other modules for test directories to include in it's list of tests to run. <p>
+It will even scan other modules for test directories to include in it's list of tests to run. 
+You can also run your tests via the command line in a terminal prompt:<p>
+
+<pre class="php:brush">
+php index.php tester/run fuel Fuel_cache_test.php
+</pre>
+
+<p class="important">If you are on a Mac and having trouble where the script is outputting nothing, you may need to make sure 
+you are calling the right php binary. For exmaple, you may need to use something like /Applications/MAMP/bin/php/php5.3.6/bin/php.
+Here is a thread that talks about it more:
+<a href="http://codeigniter.com/forums/viewthread/130383/" target="_blank">http://codeigniter.com/forums/viewthread/130383/</a>
+Hopefully it saves you some time too!
+</p>
 
 <p>Some other important features to point out:</p>
 <ul>

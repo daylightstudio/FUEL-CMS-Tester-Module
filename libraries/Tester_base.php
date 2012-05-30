@@ -92,7 +92,7 @@ abstract class Tester_base
 	 */
 	static public function is_cli()
 	{
-		$is_cli = (defined('STDIN')) ? TRUE : FALSE;
+		$is_cli = (php_sapi_name() == 'cli' or defined('STDIN')) ? TRUE : FALSE;
 		return $is_cli;
 	}
 	
@@ -281,12 +281,11 @@ abstract class Tester_base
 		if (file_exists($sql_path))
 		{
 			$sql = file_get_contents($sql_path);
-			$sql = str_replace('`', '', $sql);
+			//$sql = str_replace('`', '', $sql);
 			$sql = preg_replace('#^/\*(.+)\*/$#U', '', $sql);
 			$sql = preg_replace('/^#(.+)$/U', '', $sql);
 		}
 		$sql_arr = explode(";\n", $sql);
-		
 		foreach($sql_arr as $s)
 		{
 			$s = trim($s);

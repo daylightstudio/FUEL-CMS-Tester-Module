@@ -9,7 +9,7 @@ class Tester extends Fuel_base_controller {
 	
 	function __construct()
 	{
-		$validate = (defined('STDIN')) ? FALSE : TRUE;
+		$validate = (php_sapi_name() == 'cli' or defined('STDIN')) ? FALSE : TRUE;
 		parent::__construct($validate);
 		
 		// must load first
@@ -31,6 +31,8 @@ class Tester extends Fuel_base_controller {
 		$fields['tests'] = array('type' => 'multi', 'options' => $test_list, $this->input->post('tests'));
 
 		$this->load->library('form_builder');
+		$this->form_builder->load_custom_fields(APPPATH.'config/custom_fields.php');
+		
 		$this->form_builder->question_keys = array();
 		$this->form_builder->submit_value = null;
 		$this->form_builder->use_form_tag = FALSE;
