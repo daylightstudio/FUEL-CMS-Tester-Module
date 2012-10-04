@@ -44,6 +44,7 @@ CREATE TABLE `fuel_blocks` (
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `view` text COLLATE utf8_unicode_ci NOT NULL,
+  `language` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'english',
   `published` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'yes',
   `date_added` datetime DEFAULT NULL,
   `last_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -51,7 +52,20 @@ CREATE TABLE `fuel_blocks` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+# Dump of table fuel_categories
+# ------------------------------------------------------------
 
+CREATE TABLE `fuel_categories` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `slug` varchar(100) NOT NULL DEFAULT '',
+  `context` varchar(100) NOT NULL DEFAULT '',
+  `precedence` int(11) NOT NULL,
+  `parent_id` int(11) NOT NULL,
+  `published` enum('yes','no') NOT NULL DEFAULT 'yes',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `slug` (`slug`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 # Dump of table fuel_logs
 # ------------------------------------------------------------
@@ -81,9 +95,10 @@ CREATE TABLE `fuel_navigation` (
   `attributes` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Extra attributes that can be used for navigation implementation',
   `selected` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The pattern to match for the active state. Most likely you leave this field blank',
   `hidden` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no' COMMENT 'A hidden value can be used in rendering the menu. In some areas, the menu item may not want to be displayed',
+  `language` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'english',
   `published` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'yes' COMMENT 'Determines whether the item is displayed or not',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `group_id` (`group_id`,`location`,`parent_id`)
+  UNIQUE KEY `group_id` (`group_id`,`location`,`parent_id`, `language`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -101,7 +116,7 @@ CREATE TABLE `fuel_navigation_groups` (
 
 INSERT INTO `fuel_navigation_groups` (`id`, `name`, `published`)
 VALUES
-	(1, 'main', 'yes');
+  (1, 'main', 'yes');
 
 
 
@@ -161,29 +176,41 @@ LOCK TABLES `fuel_permissions` WRITE;
 
 INSERT INTO `fuel_permissions` (`id`, `description`, `name`, `active`)
 VALUES
-	(NULL,'Pages','pages','yes'),
-	(NULL,'Pages: Create','pages/create','yes'),
-	(NULL,'Pages: Edit','pages/edit','yes'),
-	(NULL,'Pages: Publish','pages/publish','yes'),
-	(NULL,'Pages: Delete','pages/delete','yes'),
-	(NULL,'Blocks','blocks','yes'),
-	(NULL,'Blocks: Create','blocks/create','yes'),
-	(NULL,'Blocks: Edit','blocks/edit','yes'),
-	(NULL,'Blocks: Publish','blocks/publish','yes'),
-	(NULL,'Blocks: Delete','blocks/delete','yes'),
-	(NULL,'Navigation','navigation','yes'),
-	(NULL,'Navigation: Create','navigation/create','yes'),
-	(NULL,'Navigation: Edit','navigation/edit','yes'),
-	(NULL,'Navigation: Publish','navigation/publish','yes'),
-	(NULL,'Navigation: Delete','navigation/delete','yes'),
-	(NULL,'Site Variables','sitevariables','yes'),
-	(NULL,'Assets','assets','yes'),
-	(NULL,'Site Documentation','site_docs','yes'),
-	(NULL,'Users','users','yes'),
-	(NULL,'Permissions','permissions','yes'),
-	(NULL,'Cache','cache','yes'),
-	(NULL,'Logs','logs','yes'),
-	(NULL,'Settings','settings','yes');
+  (NULL,'Pages','pages','yes'),
+  (NULL,'Pages: Create','pages/create','yes'),
+  (NULL,'Pages: Edit','pages/edit','yes'),
+  (NULL,'Pages: Publish','pages/publish','yes'),
+  (NULL,'Pages: Delete','pages/delete','yes'),
+  (NULL,'Blocks','blocks','yes'),
+  (NULL,'Blocks: Create','blocks/create','yes'),
+  (NULL,'Blocks: Edit','blocks/edit','yes'),
+  (NULL,'Blocks: Publish','blocks/publish','yes'),
+  (NULL,'Blocks: Delete','blocks/delete','yes'),
+  (NULL,'Navigation','navigation','yes'),
+  (NULL,'Navigation: Create','navigation/create','yes'),
+  (NULL,'Navigation: Edit','navigation/edit','yes'),
+  (NULL,'Navigation: Publish','navigation/publish','yes'),
+  (NULL,'Navigation: Delete','navigation/delete','yes'),
+  (NULL,'Categories','categories','yes'),
+  (NULL,'Categories: Create','categories/create','yes'),
+  (NULL,'Categories: Edit','categories/edit','yes'),
+  (NULL,'Categories: Publish','categories/publish','yes'),
+  (NULL,'Categories: Delete','categories/delete','yes'),
+  (NULL,'Tags','tags','yes'),
+  (NULL,'Tags: Create','tags/create','yes'),
+  (NULL,'Tags: Edit','tags/edit','yes'),
+  (NULL,'Tags: Publish','tags/publish','yes'),
+  (NULL,'Tags: Delete','tags/delete','yes'),
+  (NULL,'Site Variables','sitevariables','yes'),
+  (NULL,'Assets','assets','yes'),
+  (NULL,'Site Documentation','site_docs','yes'),
+  (NULL,'Users','users','yes'),
+  (NULL,'Permissions','permissions','yes'),
+  (NULL,'Cache','cache','yes'),
+  (NULL,'Logs','logs','yes'),
+  (NULL,'Settings','settings','yes'),
+  (NULL,'Generate Code','generate','yes');
+  
 
 /*!40000 ALTER TABLE `fuel_permissions` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -208,10 +235,11 @@ CREATE TABLE `fuel_relationships` (
 
 CREATE TABLE `fuel_settings` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `module` varchar(255) NOT NULL DEFAULT '',
-  `key` varchar(255) NOT NULL DEFAULT '',
+  `module` varchar(50) NOT NULL DEFAULT '',
+  `key` varchar(50) NOT NULL DEFAULT '',
   `value` longtext,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `module` (`module`,`key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -229,7 +257,19 @@ CREATE TABLE `fuel_site_variables` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+# Dump of table fuel_tags
+# ------------------------------------------------------------
 
+CREATE TABLE `fuel_tags` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `category_id` int(10) unsigned NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `precedence` int(11) NOT NULL,
+  `published` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'yes',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `slug` (`slug`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 # Dump of table fuel_users
 # ------------------------------------------------------------
@@ -252,7 +292,7 @@ CREATE TABLE `fuel_users` (
 
 INSERT INTO `fuel_users` (`id`, `user_name`, `password`, `email`, `first_name`, `last_name`, `language`, `reset_key`, `salt`, `super_admin`, `active`)
 VALUES
-	(1, 'admin', 'f4c99eae874755b97610d650be565f1ac42019d1', 'dave@thedaylightstudio.com', 'Admin', 'test', 'english', '', '429c6e14342dd7a63c510007a1858c26', 'yes', 'yes');
+  (1, 'admin', 'f4c99eae874755b97610d650be565f1ac42019d1', 'info@getfuelcms.com', 'Admin', 'test', 'english', '', '429c6e14342dd7a63c510007a1858c26', 'yes', 'yes');
 
 
 
