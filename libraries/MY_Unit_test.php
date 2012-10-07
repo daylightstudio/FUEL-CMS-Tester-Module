@@ -126,9 +126,11 @@ class MY_Unit_test extends CI_Unit_test{
 		}
 				
 		$back = $this->_backtrace();
-	
+		
+		$testtype = 'string';
 		if (!is_string($test))
 		{
+			$testtype = gettype($test);
 			$test = var_export($test, TRUE);
 		}
 
@@ -139,12 +141,12 @@ class MY_Unit_test extends CI_Unit_test{
 		
 		if ($format)
 		{
-			$test_data = gettype($test).' <pre>'.htmlentities($test).'</pre>';
+			$test_data = $testtype.' <pre>'.htmlentities($test).'</pre>';
 			$res_data = $extype.' <pre>'.htmlentities($expected).'</pre>';
 		}
 		else
 		{
-			$test_data = gettype($test).' - '.$test;
+			$test_data = $testtype.' - '.$test;
 			$res_data = $extype.' - '.$expected;
 		}
 		$report[] = array (

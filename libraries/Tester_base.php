@@ -122,7 +122,6 @@ abstract class Tester_base
 		if ($this->_is_db_created)
 		{
 			$this->remove_db();
-			//$this->CI->db->close();// not needed because it is closed inside CodeIgniter.php
 		}
 		
 		// remove the cookie file
