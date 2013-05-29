@@ -69,7 +69,7 @@ class Tester extends Fuel_base_controller {
 			
 			if (isset($_SERVER['argv'][3]))
 			{
-				// no loop through the argv arguments to get the folders/tests
+				// now loop through the argv arguments to get the folders/tests
 				for ($i = 3; $i < count($_SERVER['argv']); $i++)
 				{
 					if (!empty($_SERVER['argv'][$i]))
