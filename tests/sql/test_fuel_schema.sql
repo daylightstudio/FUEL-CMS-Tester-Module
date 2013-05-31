@@ -49,7 +49,7 @@ CREATE TABLE `fuel_blocks` (
   `date_added` datetime DEFAULT NULL,
   `last_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
+  UNIQUE KEY `name` (`name`,`language`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 # Dump of table fuel_categories
@@ -152,7 +152,7 @@ CREATE TABLE `fuel_pages` (
   `last_modified_by` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `location` (`location`),
-  KEY `template_id` (`layout`)
+  KEY `layout` (`layout`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
