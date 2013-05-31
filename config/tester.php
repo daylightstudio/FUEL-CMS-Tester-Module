@@ -14,7 +14,7 @@ $config['nav']['tools']['tools/tester'] = lang('module_tester');
 |--------------------------------------------------------------------------
 */
 
-// dsn for database connection. If not supplied, it will assume a test'group name is created in the database.php config
+// dsn for database connection. If not supplied, it will assume a test group name is created in the database.php config
 // set this to 'test' if you want load_page method to load pages from the test database to test
 $config['tester']['dsn_group'] = 'test';
 
