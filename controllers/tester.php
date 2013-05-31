@@ -60,11 +60,15 @@ class Tester extends Fuel_base_controller {
 		{
 			if (empty($_SERVER['argv'][2]))
 			{
-				$this->output->set_output(lang('tester_no_cli_arguments'));
-				return;
+				$module = 'application';
+				// $this->output->set_output(lang('tester_no_cli_arguments'));
+				// return;
+			}
+			else
+			{
+				$module = $_SERVER['argv'][2];	
 			}
 			
-			$module = $_SERVER['argv'][2];
 			$folders = array();
 			
 			if (isset($_SERVER['argv'][3]))
@@ -78,9 +82,7 @@ class Tester extends Fuel_base_controller {
 					}
 				}
 			}
-			
 			$tests = $this->fuel->tester->get_tests($module, $folders, TRUE);
-			
 		}
 		else
 		{
