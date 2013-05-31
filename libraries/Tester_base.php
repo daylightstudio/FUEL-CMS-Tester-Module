@@ -34,6 +34,7 @@ abstract class Tester_base
 	protected $loaded_page = NULL; // determines if a pges is loaded
 	
 	private $_is_db_created = NULL;
+	private $_orig_db = NULL;
 	
 	// --------------------------------------------------------------------
 
@@ -122,6 +123,9 @@ abstract class Tester_base
 		if ($this->_is_db_created)
 		{
 			$this->remove_db();
+
+			$sql = 'USE '.$this->_orig_db;
+			$this->CI->db->query($sql);
 		}
 		
 		// remove the cookie file
@@ -182,6 +186,7 @@ abstract class Tester_base
 			$tester_config = $this->CI->config->item('tester');
 			$dsn = $this->config_item('dsn_group');
 		}
+		$this->_orig_db = $this->CI->db->database;
 		$this->CI->load->database($dsn);
 	}
 	
@@ -261,10 +266,11 @@ abstract class Tester_base
 	 * @param	string
 	 * @return	void
 	 */
-	public function load_sql($file = NULL, $module = 'tester')
+	public function load_sql($file = NULL, $module = '')
 	{
 		if (!$this->_is_db_created) $this->create_db();
-		if (empty($module) OR $module == 'app')
+
+		if (empty($module) OR $module == 'app' OR $module == 'applicaton')
 		{
 			$sql_path = APPPATH.'tests/sql/'.$file;
 		}
@@ -275,8 +281,8 @@ abstract class Tester_base
 		
 		// select the database
 		$sql = 'USE '.$this->config_item('db_name');
-		
 		$this->CI->db->query($sql);
+
 		if (file_exists($sql_path))
 		{
 			$sql = file_get_contents($sql_path);
@@ -285,6 +291,7 @@ abstract class Tester_base
 			$sql = preg_replace('/^#(.+)$/U', '', $sql);
 		}
 		$sql_arr = explode(";\n", $sql);
+
 		foreach($sql_arr as $s)
 		{
 			$s = trim($s);
