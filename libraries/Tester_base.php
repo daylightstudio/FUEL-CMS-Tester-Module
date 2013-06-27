@@ -186,7 +186,12 @@ abstract class Tester_base
 			$tester_config = $this->CI->config->item('tester');
 			$dsn = $this->config_item('dsn_group');
 		}
-		$this->_orig_db = $this->CI->db->database;
+
+		if (isset($this->CI->db->database))
+		{
+			$this->_orig_db = $this->CI->db->database;	
+		}
+		
 		$this->CI->load->database($dsn);
 	}
 	
@@ -219,7 +224,8 @@ abstract class Tester_base
 	 */
 	public function create_db()
 	{
-		$this->db_connect();
+		// use the default database connection to make the new database
+		$this->db_connect('default');
 		
 		$this->CI->load->dbforge();
 		
