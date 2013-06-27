@@ -1,7 +1,7 @@
 <?php 
 /*
 |--------------------------------------------------------------------------
-| Alaternative database DSN. This file is included in 
+| Alternative database DSN. This file is included in 
 | application/database.php if in TESTING mode
 |--------------------------------------------------------------------------
 */
