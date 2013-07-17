@@ -1,5 +1,5 @@
 # TESTER MODULE FOR FUEL CMS
-This is a [FUEL CMS](http://www.getfuelcms.com) tester module for adding tester like functionality including posts, categories, and commenting.
+This is a [FUEL CMS](http://www.getfuelcms.com) tester module provides a convenient way for you to test your code including controller output.
 
 ## INSTALLATION
 There are a couple ways to install the module. If you are using GIT you can use the following method
