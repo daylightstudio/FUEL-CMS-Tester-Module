@@ -16,7 +16,7 @@ Type in:
 
 ### MANUAL
 1. Download the zip file from GitHub:
-[https://github.com/daylightstudio/FUEL-CMS-Tester-Module](https://github.com/daylightstudio/FUEL-CMS-tester-Module)
+[https://github.com/daylightstudio/FUEL-CMS-Tester-Module](https://github.com/daylightstudio/FUEL-CMS-Tester-Module)
 
 2. Create a "tester" folder in fuel/modules/ and place the contents of the tester module folder in there.
 
