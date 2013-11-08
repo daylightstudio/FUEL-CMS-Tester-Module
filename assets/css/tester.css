@@ -1,4 +1,5 @@
 .ico_tools_tester { background-image: url(../images/ico_bug.png); }
+.ico_refresh { background-image: url(../images/ico_arrow_refresh.png); background-position: 4px 2px; }
 div#tester_results a.back { float: right; margin: 5px 10px 0 0; display: block; }
 div#tester_results table { border-collapse: collapse;  }
 div#tester_results table td { border: 1px solid #eee; }
