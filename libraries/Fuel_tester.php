@@ -244,7 +244,11 @@ class Fuel_tester extends Fuel_advanced_module {
 				$tests = directory_to_array($dir_path);
 				foreach($tests as $test)
 				{
-					$dir = '/'.$test;
+					$dir = $test;
+					if (substr(strtoupper(PHP_OS), 0, 3) != 'WIN')
+					{
+						$dir = '/'.$dir;	
+					}
 					if (substr($test, -9) ==  '_test.php')
 					{
 						$val = str_replace(EXT, '', end(explode('/', $test)));
