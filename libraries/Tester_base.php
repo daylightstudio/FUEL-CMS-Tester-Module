@@ -326,6 +326,11 @@ abstract class Tester_base
 		}
 		
 		$this->CI->load->library('user_agent');
+
+		if (!function_exists('curl_init'))
+		{
+			show_error(lang('error_no_curl_lib'));
+		}
 		
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, site_url($page));
