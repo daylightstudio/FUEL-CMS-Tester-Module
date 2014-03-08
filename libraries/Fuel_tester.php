@@ -228,7 +228,7 @@ class Fuel_tester extends Fuel_advanced_module {
 	
 		foreach($folders as $folder)
 		{
-			if (!empty($module) AND ($module != 'app' OR $module != 'application'))
+			if (!empty($module) AND ($module != 'app' AND $module != 'application'))
 			{
 				$dir_path = MODULES_PATH.$module.'/tests/'.$folder;
 			}
@@ -237,7 +237,7 @@ class Fuel_tester extends Fuel_advanced_module {
 				$dir_path = APPPATH.'tests/'.$folder;
 				$module = 'application';
 			}
-			
+
 			// if a directory, grab all the tests in it
 			if (is_dir($dir_path))
 			{
