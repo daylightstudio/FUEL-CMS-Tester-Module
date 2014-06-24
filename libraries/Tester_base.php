@@ -364,7 +364,8 @@ abstract class Tester_base
 	// --------------------------------------------------------------------
 
 	/**
-	 *  Convenience method to test if something exists on a page. The first parameter is a string to match. The second parameter says whether to use jquery syntax to match a specific DOM node (TRUE), or to use regular expression (FALSE).
+	 *  Convenience method to test if something exists on a page. The first parameter is a string to match. 
+	 *  The second parameter says whether to use jquery syntax to match a specific DOM node (TRUE), or to use regular expression (FALSE).
 	 *
 	 * @access	public
 	 * @param	string
@@ -383,7 +384,30 @@ abstract class Tester_base
 		}
 	}
 	
-	
+	// --------------------------------------------------------------------
+
+	/**
+	 *  Convenience method to test if something exists in a string. The first parameter is a string to match. 
+	 *  The second parameter is a string to test.
+	 *  The third parameter says whether to use jquery syntax to match a specific DOM node (TRUE), or to use regular expression (FALSE).
+	 *
+	 * @access	public
+	 * @param	string
+	 * @param	boolean
+	 * @return	void
+	 */
+	public function str_contains($match, $str, $use_jquery = TRUE)
+	{
+		phpQuery::newDocument($str);
+		if ($use_jquery)
+		{
+			return pq($match)->size();
+		}
+		else
+		{
+			return (preg_match('#'.$match.'#', $str));
+		}
+	}
 	// --------------------------------------------------------------------
 
 	/**
