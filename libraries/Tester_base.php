@@ -25,6 +25,7 @@
  * @author		David McReynolds @ Daylight Studio
  * @link		http://docs.getfuelcms.com/modules/tester/tester_base
  */
+require_once(TESTER_PATH.'libraries/phpQuery.php');
 
 abstract class Tester_base 
 {
@@ -355,7 +356,6 @@ abstract class Tester_base
 		curl_close($ch); 
 		
 		//http://code.google.com/p/phpquery/wiki/Manual
-		require_once(TESTER_PATH.'libraries/phpQuery.php');
 		phpQuery::newDocumentHTML($output, strtolower($this->CI->config->item('charset')));
 		$this->loaded_page = $output;
 		return $output;
