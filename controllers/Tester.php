@@ -87,7 +87,8 @@ class Tester extends Fuel_base_controller {
 		}
 		else
 		{
-			$tests = $this->input->post('tests');
+			// Only get valid tests, and eliminate potentially injected filenames
+			$tests = array_intersect($this->input->post('tests'), array_keys($this->fuel->tester->get_tests()));
 		}
 		
 		$vars = array();
