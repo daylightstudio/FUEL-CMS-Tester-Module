@@ -70,7 +70,8 @@ class Fuel_tester extends Fuel_advanced_module {
 		{
 			
 			$this->CI->unit->reset();
-			$test_class = str_replace(EXT, '', end(explode('/', $test)));
+			$test_arr = explode('/', $test);
+			$test_class = str_replace(EXT, '', end($test_arr));
 			if (preg_match('#'.preg_quote(MODULES_PATH).'#', $test))
 			{
 				$file_pieces = explode('/', str_replace(MODULES_PATH, '', $test));
@@ -251,7 +252,8 @@ class Fuel_tester extends Fuel_advanced_module {
 					}
 					if (substr($test, -9) ==  '_test.php')
 					{
-						$val = str_replace(EXT, '', end(explode('/', $test)));
+						$test_arr = explode('/', $test);
+						$val = str_replace(EXT, '', end($test_arr));
 						$return[$dir] = $module.': '.humanize($val);
 					}
 				}
@@ -260,14 +262,16 @@ class Fuel_tester extends Fuel_advanced_module {
 			// if a file (without extension), add just that test
 			else if (is_file($dir_path.EXT))
 			{
-				$val = end(explode('/', $dir_path));
+				$dir_path_arr = explode('/', $dir_path);
+				$val = end($dir_path_arr);
 				$return[$dir_path.EXT] = $module.': '.humanize($val);
 			}
 
 			// if a file (with an extension), add just that test
 			else if (substr($dir_path, -4) ==  EXT)
 			{
-				$val = str_replace(EXT, '', end(explode('/', $dir_path)));
+				$dir_path_arr = explode('/', $dir_path);
+				$val = str_replace(EXT, '', end($dir_path_arr));
 				$return[$dir_path] = $module.': '.humanize($val);
 			}
 		}
