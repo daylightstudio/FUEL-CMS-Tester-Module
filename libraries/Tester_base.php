@@ -125,7 +125,7 @@ abstract class Tester_base
 		{
 			$this->remove_db();
 
-			$sql = 'USE '.$this->_orig_db;
+			$sql = "USE `{$this->_orig_db}`;";
 			$this->CI->db->query($sql);
 		}
 		
@@ -287,7 +287,8 @@ abstract class Tester_base
 		}
 		
 		// select the database
-		$sql = 'USE '.$this->config_item('db_name');
+		$db_name = $this->config_item('db_name');
+		$sql = "USE `$db_name`;";
 		$this->CI->db->query($sql);
 
 		if (file_exists($sql_path))
