@@ -298,7 +298,7 @@ abstract class Tester_base
 			$sql = preg_replace('#^/\*(.+)\*/$#U', '', $sql);
 			$sql = preg_replace('/^#(.+)$/U', '', $sql);
 		}
-		$sql_arr = explode(";\n", $sql);
+		$sql_arr = explode(";\n", str_replace("\r\n", "\n", $sql));
 
 		foreach($sql_arr as $s)
 		{
