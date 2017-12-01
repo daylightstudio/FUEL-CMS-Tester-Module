@@ -81,9 +81,11 @@ class Tester extends Fuel_base_controller {
 		}
 		else
 		{
+			// Check if the user came from the main 'Tester' tool page
 			$tests = $this->input->post('tests');
 			if (empty($tests))
 			{
+				// Check if tests are being re-run from the test results page
 				$serialized = $this->input->post('tests_serialized');
 				if (!empty($serialized))
 				{
