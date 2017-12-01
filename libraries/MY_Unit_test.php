@@ -148,19 +148,19 @@ class MY_Unit_test extends CI_Unit_test{
 			$test_data = $testtype.' - '.$test;
 			$res_data = $extype.' - '.$expected;
 		}
-		$report[] = array (
-							'test_name'			=> $test_name,
-							'test_data'		=> $test_data,
-							'res_data'		=> $res_data,
-							'result'			=> ($result === TRUE) ? 'passed' : 'failed',
-							'file'				=> $back['file'],
-							'line'				=> $back['line'],
-							'notes'				=> $notes
-						);
+		$report = array (
+			'test_name'	=> $test_name,
+			'test_data'	=> $test_data,
+			'res_data'	=> $res_data,
+			'result'	=> ($result === TRUE) ? 'passed' : 'failed',
+			'file'		=> $back['file'],
+			'line'		=> $back['line'],
+			'notes'		=> $notes
+		);
 
 		$this->results[] = $report;		
 		
-		return($this->report($this->result($report), $format));
+		return($this->report($this->result(array($report)), $format));
 	}
 	
 	// --------------------------------------------------------------------
