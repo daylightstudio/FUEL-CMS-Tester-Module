@@ -49,12 +49,7 @@ class Tester extends Fuel_base_controller {
 	function run()
 	{
 		$is_cli = $this->fuel->tester->is_cli();
-		
-		if (empty($_POST) AND !$is_cli)
-		{
-			redirect(fuel_url('tools/tester'));
-		}
-		
+
 		if ($is_cli)
 		{
 			if (empty($_SERVER['argv'][3]))
