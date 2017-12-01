@@ -49,13 +49,7 @@ class Tester extends Fuel_base_controller {
 	function run()
 	{
 		$is_cli = $this->fuel->tester->is_cli();
-		
-		if (empty($_POST) AND !$is_cli)
-		{
-			redirect(fuel_url('tools/tester'));
-		}
-		
-		$tests = array();
+
 		if ($is_cli)
 		{
 			if (empty($_SERVER['argv'][3]))
@@ -87,24 +81,27 @@ class Tester extends Fuel_base_controller {
 		}
 		else
 		{
-			// Only get valid tests, and eliminate potentially injected filenames
-			$tests = array_intersect($this->input->post('tests'), array_keys($this->fuel->tester->get_tests()));
-		}
-		
-		$vars = array();
-		
-		if (empty($tests))
-		{
-			$tests = $this->input->post('tests_serialized');
+			// Check if the user came from the main 'Tester' tool page
+			$tests = $this->input->post('tests');
+			if (empty($tests))
+			{
+				// Check if tests are being re-run from the test results page
+				$serialized = $this->input->post('tests_serialized');
+				if (!empty($serialized))
+				{
+					$tests = unserialize(base64_decode($serialized));
+				}
+			}
 			if (empty($tests))
 			{
 				redirect(fuel_url('tools/tester'));
 			}
-			else
-			{
-				$tests = unserialize(base64_decode($tests));
-			}
+
+			// Only get valid tests, and eliminate potentially injected filenames
+			$tests = array_intersect($tests, array_keys($this->fuel->tester->get_tests()));
 		}
+		
+		$vars = array();
 		$vars['results'] = $this->fuel->tester->run($tests);
 		
 		if ($is_cli)
