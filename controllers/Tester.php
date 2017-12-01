@@ -55,7 +55,6 @@ class Tester extends Fuel_base_controller {
 			redirect(fuel_url('tools/tester'));
 		}
 		
-		$tests = array();
 		if ($is_cli)
 		{
 			if (empty($_SERVER['argv'][3]))
@@ -87,24 +86,25 @@ class Tester extends Fuel_base_controller {
 		}
 		else
 		{
-			// Only get valid tests, and eliminate potentially injected filenames
-			$tests = array_intersect($this->input->post('tests'), array_keys($this->fuel->tester->get_tests()));
-		}
-		
-		$vars = array();
-		
-		if (empty($tests))
-		{
-			$tests = $this->input->post('tests_serialized');
+			$tests = $this->input->post('tests');
+			if (empty($tests))
+			{
+				$serialized = $this->input->post('tests_serialized');
+				if (!empty($serialized))
+				{
+					$tests = unserialize(base64_decode($serialized));
+				}
+			}
 			if (empty($tests))
 			{
 				redirect(fuel_url('tools/tester'));
 			}
-			else
-			{
-				$tests = unserialize(base64_decode($tests));
-			}
+
+			// Only get valid tests, and eliminate potentially injected filenames
+			$tests = array_intersect($tests, array_keys($this->fuel->tester->get_tests()));
 		}
+		
+		$vars = array();
 		$vars['results'] = $this->fuel->tester->run($tests);
 		
 		if ($is_cli)
