@@ -35,8 +35,7 @@ class Widgicorp_test extends Tester_base {
 	// TEST 3 test services page
 	public function test_services()
 	{
-		$page = $this->load_page('about/services');
-		
+		$this->load_page('about/services');
 		$test = pq("title")->text();
 		$expected = 'Services : About : WidgiCorp - Fine Makers of Widgets';
 		$this->run($test, $expected, 'Test Services title');
@@ -72,7 +71,6 @@ class Widgicorp_test extends Tester_base {
 		$test = (strpos($page, '<li><strong>Client:</strong> Yoda</li>') !== FALSE);
 		$expected = TRUE;
 		$this->run($test, $expected, 'Test Showcase project page content');
-		
 	}
 	
 	// TEST 7 test showcase
@@ -84,7 +82,7 @@ class Widgicorp_test extends Tester_base {
 		$this->run($test, $expected, 'Test Blog title');
 		
 		// test blog post exists
-		$blog = $this->load_page('blog');
+		$this->load_page('blog');
 		$test = pq("h2")->text();
 		$expected = 'A long, long time ago, in a galaxy far, far away';
 		$this->run($test, $expected, 'Test Blog post title');
@@ -104,8 +102,8 @@ class Widgicorp_test extends Tester_base {
 		$post['email'] = 'darth@deathstar.com';
 		$post['question'] = 'Do I look good in black?';
 		
-		// must have email set in applicaton/config/MY_config.php
-		$contact = $this->load_page('contact', $post, TRUE);
+		// must have email set in application/config/MY_config.php
+		$this->load_page('contact', $post);
 		$test = pq(".success")->size();
 		$expected = 1;
 		$this->run($test, $expected, 'Test Contact email... if failed make sure you have an admin email address set in applicaton/config/MY_config.php');
@@ -140,6 +138,5 @@ class Widgicorp_test extends Tester_base {
 	{
 		return pq("#error_php")->size();
 	}
-	
 
 }

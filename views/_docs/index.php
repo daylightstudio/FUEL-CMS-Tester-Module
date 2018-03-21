@@ -12,7 +12,7 @@ php index.php tester/run fuel Fuel_cache_test.php
 </pre>
 
 <p class="important">If you are on a Mac and having trouble where the script is outputting nothing, you may need to make sure 
-you are calling the right php binary. For exmaple, you may need to use something like /Applications/MAMP/bin/php/php5.3.6/bin/php.
+you are calling the right php binary. For example, you may need to use something like /Applications/MAMP/bin/php/php5.3.6/bin/php.
 Here is a thread that talks about it more:
 <a href="http://codeigniter.com/forums/viewthread/130383/" target="_blank">http://codeigniter.com/forums/viewthread/130383/</a>
 Hopefully it saves you some time too!
