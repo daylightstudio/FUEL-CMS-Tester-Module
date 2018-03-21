@@ -35,6 +35,10 @@ class Fuel_tester extends Fuel_advanced_module {
 	 * Constructor
 	 *
 	 * The constructor can be passed an array of config values
+	 *
+	 * @access	public
+	 * @param	array	config preferences
+	 * @return	void
 	 */
 	function __construct($params = array())
 	{
@@ -62,13 +66,15 @@ class Fuel_tester extends Fuel_advanced_module {
 	 */
 	function run($tests)
 	{
-		$tmpl = ($this->is_cli()) ? $this->load_view('_admin/report_template_cli', array(), TRUE) : $this->load_view('_admin/report_template', array(), TRUE);
-		$this->CI->unit->set_template($tmpl);
+		$template = ($this->is_cli())
+			? $this->load_view('_admin/report_template_cli', array(), TRUE)
+			: $this->load_view('_admin/report_template', array(), TRUE);
+
+		$this->CI->unit->set_template($template);
 		$results = array();
 		
 		foreach($tests as $test)
 		{
-			
 			$this->CI->unit->reset();
 			$test_arr = explode('/', $test);
 			$test_class = str_replace(EXT, '', end($test_arr));
@@ -102,9 +108,7 @@ class Fuel_tester extends Fuel_advanced_module {
 			$results[$key]['raw'] = $this->CI->unit->result();
 			$results[$key]['passed'] = 0; // initialize
 			$results[$key]['failed'] = 0; // initialize
-			
 		}
-		$results = $results;
 
 		$results['total_passed'] = 0;
 		$results['total_failed'] = 0;
@@ -141,7 +145,7 @@ class Fuel_tester extends Fuel_advanced_module {
 	 *
 	 * @access	public
 	 * @param	string	The module to retrieve the tests from (optional)
-	 * @param	string	The folder name within the module. The default is 'tests 
+	 * @param	array	The folder name within the module. The default is 'tests'
 	 * @param	boolean	If TRUE, will just return just the paths to the tests
 	 * @return	array
 	 */
@@ -154,7 +158,6 @@ class Fuel_tester extends Fuel_advanced_module {
 		else
 		{
 			// get tests from application folder
-			$test_list = array();
 			$app_tests = $this->_get_tests();
 
 			// get tests for modules
@@ -210,7 +213,7 @@ class Fuel_tester extends Fuel_advanced_module {
 	 *
 	 * @access	protected
 	 * @param	string	The module to retrieve the tests from (optional)
-	 * @param	string	The folder name within the module. The default is 'tests 
+	 * @param	array	The folder name within the module. The default is 'tests'
 	 * @return	array
 	 */
 	protected function _get_tests($module = NULL, $folders = array())
