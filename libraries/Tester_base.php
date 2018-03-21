@@ -29,10 +29,10 @@ require_once(TESTER_PATH.'libraries/phpQuery.php');
 
 abstract class Tester_base 
 {
-	protected $CI = NULL; // a reference to the CodeIgntier super object
+	protected $CI = NULL; // a reference to the CodeIgniter super object
 	protected $fuel = NULL; // a reference to the FUEL object
 	
-	protected $loaded_page = NULL; // determines if a pges is loaded
+	protected $loaded_page = NULL; // determines if a page is loaded
 	
 	private $_is_db_created = NULL;
 	private $_orig_db = NULL;
@@ -43,7 +43,7 @@ abstract class Tester_base
 	 * Constructor sets up the CI instance
 	 *
 	 * @access	public
-	 * @return	array
+	 * @return	void
 	 */
 	public function __construct()
 	{
@@ -184,7 +184,6 @@ abstract class Tester_base
 		// check config if $dsn is empty
 		if (empty($dsn))
 		{
-			$tester_config = $this->CI->config->item('tester');
 			$dsn = $this->config_item('dsn_group');
 		}
 
@@ -202,8 +201,7 @@ abstract class Tester_base
 	 *  Checks to see if the database specified in the tester configuration exists or not
 	 *
 	 * @access	public
-	 * @param	string
-	 * @return	void
+	 * @return	boolean
 	 */
 	public function db_exists()
 	{
@@ -220,7 +218,6 @@ abstract class Tester_base
 	 *  Creates the database based on the tester configuration values.
 	 *
 	 * @access	public
-	 * @param	boolean
 	 * @return	void
 	 */
 	public function create_db()
@@ -230,8 +227,8 @@ abstract class Tester_base
 		
 		$this->CI->load->dbforge();
 		
-		// create the database if it doesn't exist'
-		if (!$this->db_exists('created'))
+		// create the database if it doesn't exist
+		if (!$this->db_exists())
 		{
 			$this->CI->dbforge->create_database($this->config_item('db_name'));
 		}
@@ -256,7 +253,7 @@ abstract class Tester_base
 		$this->CI->load->dbforge();
 		
 		// drop the database if it exists
-		if ($this->db_exists('remove'))
+		if ($this->db_exists())
 		{
 			$this->CI->dbforge->drop_database($this->config_item('db_name'));
 		}
@@ -277,7 +274,7 @@ abstract class Tester_base
 	{
 		if (!$this->_is_db_created) $this->create_db();
 
-		if (empty($module) OR $module == 'app' OR $module == 'applicaton')
+		if (empty($module) OR $module == 'app' OR $module == 'application')
 		{
 			$sql_path = APPPATH.'tests/sql/'.$file;
 		}
@@ -365,13 +362,12 @@ abstract class Tester_base
 	// --------------------------------------------------------------------
 
 	/**
-	 *  Convenience method to test if something exists on a page. The first parameter is a string to match. 
-	 *  The second parameter says whether to use jquery syntax to match a specific DOM node (TRUE), or to use regular expression (FALSE).
+	 * Convenience method to test if something exists on a page.
 	 *
 	 * @access	public
-	 * @param	string
-	 * @param	boolean
-	 * @return	void
+	 * @param	string	string to match
+	 * @param	boolean	use jquery syntax to match a specific DOM node (TRUE), or to use regular expression (FALSE)
+	 * @return	boolean
 	 */
 	public function page_contains($match, $use_jquery = TRUE)
 	{
@@ -388,14 +384,13 @@ abstract class Tester_base
 	// --------------------------------------------------------------------
 
 	/**
-	 *  Convenience method to test if something exists in a string. The first parameter is a string to match. 
-	 *  The second parameter is a string to test.
-	 *  The third parameter says whether to use jquery syntax to match a specific DOM node (TRUE), or to use regular expression (FALSE).
+	 *  Convenience method to test if something exists in a string.
 	 *
 	 * @access	public
-	 * @param	string
-	 * @param	boolean
-	 * @return	void
+	 * @param	string	string to match
+	 * @param	boolean	string to test
+	 * @param	boolean	use jquery syntax to match a specific DOM node (TRUE), or to use regular expression (FALSE)
+	 * @return	boolean
 	 */
 	public function str_contains($match, $str, $use_jquery = TRUE)
 	{
