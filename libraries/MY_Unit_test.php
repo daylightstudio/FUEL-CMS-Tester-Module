@@ -27,7 +27,7 @@
  * @author		David McReynolds @ Daylight Studio
  */
 
-class MY_Unit_test extends CI_Unit_test{
+class MY_Unit_test extends CI_Unit_test {
 
 	var $active			= TRUE;
 	var $results 		= array();
@@ -43,6 +43,8 @@ class MY_Unit_test extends CI_Unit_test{
 	 * Displays a table with the test data
 	 *
 	 * @access	public
+	 * @param	array
+	 * @param	boolean
 	 * @return	string
 	 */
 	function report($result = array(), $format = FALSE)
@@ -99,6 +101,8 @@ class MY_Unit_test extends CI_Unit_test{
 	 * @param	mixed
 	 * @param	mixed
 	 * @param	string
+	 * @param	string
+	 * @param	boolean
 	 * @return	string
 	 */	
 	function run($test, $expected = TRUE, $test_name = 'undefined', $notes = '', $format = FALSE)
@@ -112,7 +116,7 @@ class MY_Unit_test extends CI_Unit_test{
 		{
 			$expected = str_replace('is_float', 'is_double', $expected);
 			$result = ($expected($test)) ? TRUE : FALSE;	
-			$extype = str_replace(array('true', 'false'), 'bool', str_replace('is_', '', $expected));
+			$ex_type = str_replace(array('true', 'false'), 'bool', str_replace('is_', '', $expected));
 		}
 		else
 		{
@@ -121,15 +125,15 @@ class MY_Unit_test extends CI_Unit_test{
 			else
 				$result = ($test == $expected) ? TRUE : FALSE;	
 			
-			$extype = gettype($expected);
+			$ex_type = gettype($expected);
 		}
 				
 		$back = $this->_backtrace();
 		
-		$testtype = 'string';
+		$test_type = 'string';
 		if (!is_string($test))
 		{
-			$testtype = gettype($test);
+			$test_type = gettype($test);
 			$test = var_export($test, TRUE);
 		}
 
@@ -140,13 +144,13 @@ class MY_Unit_test extends CI_Unit_test{
 		
 		if ($format)
 		{
-			$test_data = $testtype.' <pre>'.htmlentities($test).'</pre>';
-			$res_data = $extype.' <pre>'.htmlentities($expected).'</pre>';
+			$test_data = $test_type.' <pre>'.htmlentities($test).'</pre>';
+			$res_data = $ex_type.' <pre>'.htmlentities($expected).'</pre>';
 		}
 		else
 		{
-			$test_data = $testtype.' - '.$test;
-			$res_data = $extype.' - '.$expected;
+			$test_data = $test_type.' - '.$test;
+			$res_data = $ex_type.' - '.$expected;
 		}
 		$report = array (
 			'test_name'	=> $test_name,
@@ -201,9 +205,6 @@ class MY_Unit_test extends CI_Unit_test{
 	}
 
 }
-// END MY_Unit_test Class
-
-
 
 /* End of file MY_Unit_test.php */
 /* Location: ./application/libraries/MY_Unit_test.php */
