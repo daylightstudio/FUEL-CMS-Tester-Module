@@ -52,11 +52,9 @@ class Tester extends Fuel_base_controller {
 
 		if ($is_cli)
 		{
-			if (empty($_SERVER['argv'][3]))
+			if (empty($_SERVER['argv'][2]))
 			{
 				$module = 'application';
-				// $this->output->set_output(lang('tester_no_cli_arguments'));
-				// return;
 			}
 			else
 			{
