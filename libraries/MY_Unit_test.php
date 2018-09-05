@@ -179,16 +179,11 @@ class MY_Unit_test extends CI_Unit_test {
 	 */
 	function _backtrace()
 	{
-		if (function_exists('debug_backtrace'))
-		{
-			$back = debug_backtrace();
-			$index = (string) count($back) - 6; // {{{ FUEL Added to get proper line numbers}}}
-			$file = ( ! isset($back[$index]['file'])) ? '' : $back[$index]['file'];
-			$line = ( ! isset($back[$index]['line'])) ? '' : $back[$index]['line'];
-						
-			return array('file' => $file, 'line' => $line);
-		}
-		return array('file' => 'Unknown', 'line' => 'Unknown');
+        $back = debug_backtrace();
+        return array(
+            'file' => (isset($back[2]['file']) ? $back[2]['file'] : ''),
+            'line' => (isset($back[2]['line']) ? $back[2]['line'] : '')
+        );
 	}
 
 	// --------------------------------------------------------------------
